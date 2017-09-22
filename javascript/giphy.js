@@ -25,13 +25,13 @@ function renderButtons() {
 
 //click event for buttons
 $("#sports-buttons").on("click", function(event) {
-    var sportClicked = $("sports-buttons").attr("sport-name");
+    //var sportClicked = $("sports-buttons").attr("sport-name");
    
      
-      console.log("sportclicked " + sportClicked);
+      //console.log("sportclicked " + sportClicked);
         
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + sportClicked +
-        "&api_key=fc47a2c6d32841c38c08048e93f837b3&limit=10";
+        //var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + sportClicked +
+        //"&api_key=fc47a2c6d32841c38c08048e93f837b3&limit=10";
 
 
 
@@ -52,16 +52,22 @@ $("#sports-buttons").on("click", function(event) {
          
          for (var i = 0; i < results.length; i++) {
           
-          var imageUrl = response.data[i].images.original.url;
+          var imageUrl = response.data[i].images.fixed_height.url;
+          var imageRating = response.data[i].rating;
+          console.log("imagerating " + imageRating);
           console.log("imageurl " + imageUrl);
           var sportsImage = $("<img>");
           sportsImage.attr("src", imageUrl);
           sportsImage.attr("alt", "sport-image");
 
-            
+            var p = $("<p>").text("Rating: " + imageRating);
             var gifDiv = $("<div class='item'>");
             
+            //gifDiv.append(sportsImage);
+            //gifDiv.append(p);
             $("#sports-images").prepend(sportsImage);
+            $("#sports-images").prepend(p);
+
         
         }
     }); 
@@ -84,12 +90,45 @@ $("#sports-buttons").on("click", function(event) {
       });
 
 
-renderButtons()
 
 
+$("img").on("click", function (state){
+   
+   $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .done(function(response) {
+          event.preventDefault();
+
+  var result = response.data;
 
 
+for (var i = 0; i < result.length; i++) {
+    var imgStill = response.data[i].images.fixed_height_still.url;
+      console.log("imgStill " + imgStill)
+    var imgAnimated = response.data[i].images.fixed_height.url;
+      console.log("imganimated " + imgAnimated)
 
+      $("img").click(function() {
+        var state = $("img").attr("data-state");
+
+        if ( state === "still") {
+          $("img").attr({'data-state': 'animate'});
+          $("img").attr("src", imgAnimated);
+        } 
+        else {
+          $("img").attr({'data-state': 'still'});
+          $("img").attr("src", imgStill);
+        };
+      });
+    };
+  });
+});
+
+renderButtons();
+
+state();
 
 //api key fc47a2c6d32841c38c08048e93f837b3
 //create on click event for buttons, still/stop(if statements, ajax call when clicking on the buttons
