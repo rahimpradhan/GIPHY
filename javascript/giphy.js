@@ -49,17 +49,18 @@ $("#sports-buttons").on("click", function(event) {
           
           var imageUrl = response.data[i].images.fixed_height.url;
           var imageRating = response.data[i].rating;
+          
           console.log("imagerating " + imageRating);
           console.log("imageurl " + imageUrl);
+          
           var sportsImage = $("<img>");
+          
           sportsImage.attr("src", imageUrl);
           sportsImage.attr("alt", "sport-image");
 
             var p = $("<p>").text("Rating: " + imageRating);
             var gifDiv = $("<div class='item'>");
             
-            //gifDiv.append(sportsImage);
-            //gifDiv.append(p);
             $("#sports-images").prepend(sportsImage);
             $("#sports-images").prepend(p);
 
@@ -97,27 +98,27 @@ $("img").on("click", function (state){
   var result = response.data;
 
 
-for (var i = 0; i < result.length; i++) {
-    var imgStill = response.data[i].images.fixed_height_still.url;
-      console.log("imgStill " + imgStill)
-    var imgAnimated = response.data[i].images.fixed_height.url;
-      console.log("imganimated " + imgAnimated)
+  for (var i = 0; i < result.length; i++) {
+      var imgStill = response.data[i].images.fixed_height_still.url;
+        console.log("imgStill " + imgStill)
+      var imgAnimated = response.data[i].images.fixed_height.url;
+        console.log("imganimated " + imgAnimated)
 
-      $("img").click(function() {
-        var state = $("img").attr("data-state");
+        $("img").click(function() {
+          var state = $("img").attr("data-state");
 
-        if ( state === "still") {
-          $("img").attr({'data-state': 'animate'});
-          $("img").attr("src", imgAnimated);
-        } 
-        else {
-          $("img").attr({'data-state': 'still'});
-          $("img").attr("src", imgStill);
-        };
-      });
-    };
+          if ( state === "still") {
+            $("img").attr({'data-state': 'animate'});
+            $("img").attr("src", imgAnimated);
+          } 
+          else {
+            $("img").attr({'data-state': 'still'});
+            $("img").attr("src", imgStill);
+          };
+        });
+      };
+    });
   });
-});
 
 renderButtons();
 
