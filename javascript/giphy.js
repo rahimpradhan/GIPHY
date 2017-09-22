@@ -26,16 +26,11 @@ function renderButtons() {
 //click event for buttons
 $("#sports-buttons").on("click", function(event) {
     //var sportClicked = $("sports-buttons").attr("sport-name");
-   
-     
+       
       //console.log("sportclicked " + sportClicked);
         
         //var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + sportClicked +
         //"&api_key=fc47a2c6d32841c38c08048e93f837b3&limit=10";
-
-
-
-
         event.preventDefault();
         
 
@@ -85,11 +80,9 @@ $("#sports-buttons").on("click", function(event) {
         // The topic from the textbox is then added to our array
         topics.push(newSport);
 
-        // calling renderButtons which handles the processing of our movie array
+        // calling renderButtons which handles the processing of our array
         renderButtons();
       });
-
-
 
 
 $("img").on("click", function (state){
